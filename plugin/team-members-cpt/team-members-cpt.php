@@ -20,6 +20,8 @@ class TeamMembersCPT {
     function __construct() {
         add_action('init', array($this, 'custom_post_type'));
         add_action('init', array($this, 'custom_taxonomy') );
+        add_action( 'add_meta_boxes', array($this, 'add_your_fields_meta_box') );
+        add_action( 'save_post', array($this, 'save_your_fields_meta') );
     }
 
     function activate() {
@@ -119,6 +121,101 @@ class TeamMembersCPT {
             'rewrite' => array( 'slug' => 'team_positions' ),
           ));
         }
+
+        /*
+        function add_custom_meta_boxes() {
+            $this->
+        }
+*/
+/*
+        function create_single_meta_box() {
+            add_meta_box(
+                'your_fields_meta_box', // $id
+                'Your Fields', // $title
+                array($this, 'show_your_fields_meta_box'), // $callback
+                'team_members', // $screen
+                'normal', // $context
+                'high' // $priority
+            );
+        }*/
+
+        function add_your_fields_meta_box() {
+            add_meta_box(
+                'your_fields_meta_box', // $id
+                'Your Fields', // $title
+                array($this, 'show_your_fields_meta_box'), // $callback
+                'team_members', // $screen
+                'normal', // $context
+                'high' // $priority
+            );
+        }
+
+        function show_your_fields_meta_box() {
+            global $post;
+                $meta = get_post_meta( $post->ID, 'your_fields', true );
+            ?>
+    
+            <input type="hidden" name="your_meta_box_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
+
+            <div style="margin-top: 5px;">
+                <h3 style="margin: 0; margin-bottom: 5px;">
+    	            <label for="your_fields[email]">Peronal Email</label>
+                </h3>
+    	        <input type="email" name="your_fields[email]" id="your_fields[email]" class="regular-text" value="<?php  if (is_array($meta) && isset($meta['email'])){ echo $meta['email']; } ?>">
+            </div> 
+            <div style="margin-top: 5px;">
+                <h3 style="margin: 0; margin-bottom: 5px;">
+    	            <label for="your_fields[facebook]">Facebook</label>
+                </h3>
+    	        <input type="text" name="your_fields[facebook]" id="your_fields[facebook]" class="regular-text" value="<?php  if (is_array($meta) && isset($meta['facebook'])){ echo $meta['facebook']; } ?>">
+            </div>
+            <div style="margin-top: 5px;">
+                <h3 style="margin: 0; margin-bottom: 5px;">
+                    <label for="your_fields[instagram]">Instagram</label>
+                </h3>
+    	        <input type="text" name="your_fields[instagram]" id="your_fields[instagram]" class="regular-text" value="<?php  if (is_array($meta) && isset($meta['instagram'])){ echo $meta['instagram']; } ?>">
+            </div>
+            <div style="margin-top: 5px;">
+                <h3 style="margin: 0; margin-bottom: 5px;">
+    	            <label for="your_fields[linkedin]">LinkedIn</label>
+                </h3>
+    	        <input type="text" name="your_fields[linkedin]" id="your_fields[linkedin]" class="regular-text" value="<?php  if (is_array($meta) && isset($meta['linkedin'])){ echo $meta['linkedin']; } ?>">
+            </div>
+            <?php 
+        }
+
+        function save_your_fields_meta( $post_id ) {
+            // verify nonce
+            if ( !wp_verify_nonce( $_POST['your_meta_box_nonce'], basename(__FILE__) ) ) {
+                return $post_id;
+            }
+            // check autosave
+            if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+                return $post_id;
+            }
+            // check permissions
+            if ( 'page' === $_POST['post_type'] ) {
+                if ( !current_user_can( 'edit_page', $post_id ) ) {
+                    return $post_id;
+                } elseif ( !current_user_can( 'edit_post', $post_id ) ) {
+                    return $post_id;
+                }
+            }
+    
+            $old = get_post_meta( $post_id, 'your_fields', true );
+            $new = $_POST['your_fields'];
+
+
+            var_dump($new);
+    
+            if ( $new && $new !== $old ) {
+                update_post_meta( $post_id, 'your_fields', $new );
+            } elseif ( '' === $new && $old ) {
+                delete_post_meta( $post_id, 'your_fields', $old );
+            }
+        }
+        
+       
 }
 
 if(class_exists('TeamMembersCPT')) {
