@@ -1,0 +1,13 @@
+.custom-field {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.custom-field .label {
+    text-transform: uppercase;
+    margin-right: 5px;
+}
+
+.custom-field .value {
+    font-weight: 600;
+}
