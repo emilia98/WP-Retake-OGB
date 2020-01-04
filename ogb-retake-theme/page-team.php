@@ -1,11 +1,18 @@
 <?php get_header();?>
 
+<div class="container m-t-100">
 
-    <div class="container">
+    <?php /* the_title() */?> 
+    <!-- <h1 class="page-title">   <hr/></h1> -->
+    <h1 class="page-title">Our Amazing Team<hr/></h1>
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+        </div>
+      </div>
 
-    <h1 class="page-title"><?php the_title()?> <hr/></h1>
-    
-    <div class="row" id="jobs">
+    <section class="page-section-custom" id="team">
+      <div class="row" id="jobs">
         <?php 
         $type = 'team_members';
         $args = array(
@@ -20,30 +27,48 @@
         if($my_query->have_posts()) 
            : while($my_query->have_posts()) : $my_query->the_post();?>
    
-            <div class="col-md-3 col-lg-3">
-            <div class="card" style="width: 18rem;">
-  <img src="<?php the_post_thumbnail_url()?>" class="card-img-top" alt="">
-  <div class="card-body">
-    <h5 class="card-title"><?php the_title() ?></h5>
-    <p class="card-text">
-    <?php 
-                   
-                   $categories = wp_get_post_terms(get_the_ID(), array(
-                       'taxonomy' => 'member_category',
-                    )); 
+            <div class="col-sm-4">
+                <div class="team-member">
+                    <img src="<?php echo has_post_thumbnail() == true ? the_post_thumbnail_url() : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png' ?>" class="card-img-top mx-auto rounded-circle" alt="">
+                    <h4><?php the_title() ?></h4>
+                    <p class="text-muted">
+                    <?php 
+                        $categories = wp_get_post_terms(get_the_ID(), array(
+                        'taxonomy' => 'member_category',
+                        )); 
                     
-                    foreach ($categories as $term) :
-                    ?>
-                    
-                    <span ><a href="<?php echo get_term_link($term) ?>" class="badge badge-term badge-light"><?php echo $term->name ?></a></span>
-                    <?php endforeach; ?>
-    </p>
-    <a href="<?php the_permalink();?>" class="btn btn-success">Meet</a>
-  </div>
-</div>
-        </div>
-        <?php endwhile; endif;  wp_reset_query();?>
-    </div>
+                        foreach ($categories as $term) :
+                        ?>
+                            <span ><a href="<?php echo get_term_link($term) ?>" class="badge badge-term badge-light"><?php echo $term->name ?></a></span>
+                        <?php endforeach; ?>
+                    </p>
+                    <ul class="list-inline social-buttons">
+                        <?php $metaFields = get_post_meta($post->ID, 'your_fields', true);?>
+                        <li class="list-inline-item">
+                            <a href="<?php echo 'https://'.$metaFields['instagram']?>">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a href="<?php echo 'https://'.$metaFields['facebook']?>">
+                            <i class="fab fa-facebook-f"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a href="<?php echo 'https://'.$metaFields['linkedin']?>">
+                            <i class="fab fa-linkedin-in"></i>
+                          </a>
+                        </li>
+                    </ul>
+                    <div class="meet-btn">
+                        <a href="<?php the_permalink();?>" class="btn btn-warning">Meet</a>
+                    </div>
+                </div>
+         
+            </div>
+            <?php endwhile; endif;  wp_reset_query();?>
+    </div>  
+  </section>    
 </div>
 
 <?php get_footer();?>

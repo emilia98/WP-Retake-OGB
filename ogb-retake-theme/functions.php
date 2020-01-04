@@ -9,14 +9,18 @@ function load_stylesheets()
     wp_enqueue_style('font-awesome');
 
     wp_enqueue_style('Montserrat', "https://fonts.googleapis.com/css?family=Montserrat:700|Montserrat:normal|Montserrat:300");
+    wp_enqueue_style('Kaushan_Script', "https://fonts.googleapis.com/css?family=Kaushan+Script");
 
     wp_register_style('icons', get_template_directory_uri() . '/css/simple-line-icons/css/simple-line-icons.css', array(), false,  'all');
     wp_enqueue_style('icons');
 
-    wp_register_style('landing', get_template_directory_uri() . '/css/creative/creative-v2.css', array(), false,  'all');
-    wp_enqueue_style('landing');
+    // wp_register_style('landing', get_template_directory_uri() . '/css/creative/creative-v2.css', array(), false,  'all');
+    // wp_enqueue_style('landing');
 
-    wp_register_style('custom', get_template_directory_uri() . '/style.css', array(), false, 'all');
+    wp_register_style('agency', get_template_directory_uri(). '/css/agency/agency.min.css', array(), false, 'all');
+    wp_enqueue_style('agency');
+    
+    wp_register_style('custom', get_template_directory_uri() . '/style.css', array(), null, 'all');
     wp_enqueue_style('custom');
 
     if(is_page('jobs'))
@@ -40,6 +44,9 @@ function include_jquery()
 
     wp_register_script('bootstrapjs', get_template_directory_uri() . '/js/bootstrap.min.js', '', 1, true);
     wp_enqueue_script('bootstrapjs');
+
+    wp_register_script('agencyjs', get_template_directory_uri() . '/js/agency.min.js', '', 1, true);
+    wp_enqueue_script('agencyjs');
 }
 
 add_action('wp_enqueue_scripts', 'include_jquery');

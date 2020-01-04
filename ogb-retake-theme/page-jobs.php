@@ -1,7 +1,5 @@
 <?php get_header();?>
-
-
-    <div class="container">
+    <div class="container m-t-100">
 
     <h1 class="page-title"><?php the_title()?> <hr/></h1>
     
@@ -20,7 +18,7 @@
         if($my_query->have_posts()) 
            : while($my_query->have_posts()) : $my_query->the_post();?>
    
-            <div class="col-sm-6 col-md-3 col-lg-3 job-col">
+            <div class="col-sm-6 col-md-4 col-lg-4 job-col">
                 <div class="job">
                     <div>
                         <img src="<?php the_post_thumbnail_url()?>" alt="HERE" class="job-img"/>

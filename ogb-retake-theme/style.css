@@ -7,12 +7,17 @@ body, *{
     font-family: 'Montserrat', sans-serif;
 }
 
+/* 
 header {
     width: 100%;
     height: 75px;
     background: #FF6347;
     background: #FF7F50;
     background: #f4623a;
+} */
+
+header {
+    background-image: url('./img/office-header.jpg') !important;
 }
 
 .navigation{
@@ -61,4 +66,48 @@ h1.page-title hr {
     color: #7a7a7a;
     text-transform: lowercase;
     font-weight: 200;
+}
+
+@media (min-width: 992px) {
+    #mainNav {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: #212529;
+    }
+}
+
+#mainNav .navbar-brand {
+    color: #fed136;
+    font-family: 'Kaushan Script',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+.m-t-100 {
+    margin-top: 120px;
+}
+
+.meet-btn {
+    margin-top: 20px;
+}
+
+.page-section-custom {
+    padding: 0;
+}
+
+.team-member-social {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.team-member-info .custom-field {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.team-member-info .custom-field .label {
+    text-transform: uppercase;
+    margin-right: 5px;
+}
+
+.team-member-info .custom-field .value {
+    font-weight: 600;
 }
