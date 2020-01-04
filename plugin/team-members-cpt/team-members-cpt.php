@@ -19,11 +19,13 @@ class TeamMembersCPT {
 
     function __construct() {
         add_action('init', array($this, 'custom_post_type'));
+        add_action('init', array($this, 'custom_taxonomy') );
     }
 
     function activate() {
         // generate a CPT
         $this->custom_post_type();
+        $this->custom_taxonomy();
         // flush rewrite rules
         flush_rewrite_rules();
     }
@@ -60,10 +62,10 @@ class TeamMembersCPT {
             'label'               => __( 'Team Members', 'text_domain' ),
             'description'         => __( 'Post Type Description', 'text_domain' ),
             'labels'              => $labels,
-            'supports'            => array( ),
-            'taxonomies'          => array( ),
+            'supports'            =>array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields'),
+            'taxonomies'          => array( 'positions'),
             'rewrite' => array('slug' => 'team_members'),
-            'hierarchical'        => false,
+            'hierarchical'        => true,
             'public'              => true,
             'show_ui'             => true,
             'show_in_menu'        => true,
@@ -77,12 +79,46 @@ class TeamMembersCPT {
             'publicly_queryable'  => true,
             'capability_type'     => 'page',
         );
-        register_post_type( 'Team Members', $args );
+        
+        register_post_type( 'team_members', $args );
 
-        echo 'Success';
+       // $this->custom_taxonomy();
     }
 
-    
+    function custom_taxonomy() {
+ 
+        // Labels part for the GUI
+         
+          $labels = array(
+            'name' => _x( 'Positions', 'taxonomy general name' ),
+            'singular_name' => _x( 'Position', 'taxonomy singular name' ),
+            'search_items' =>  __( 'Search Positions' ),
+            'popular_items' => __( 'Popular Positions' ),
+            'all_items' => __( 'All Positions' ),
+            'parent_item' => null,
+            'parent_item_colon' => null,
+            'edit_item' => __( 'Edit Position' ), 
+            'update_item' => __( 'Update Position' ),
+            'add_new_item' => __( 'Add New Position' ),
+            'new_item_name' => __( 'New Position Name' ),
+            'separate_items_with_commas' => __( 'Separate positions with commas' ),
+            'add_or_remove_items' => __( 'Add or remove positions' ),
+            'choose_from_most_used' => __( 'Choose from the most used positions' ),
+            'menu_name' => __( 'Positions' ),
+          ); 
+         
+        // Now register the non-hierarchical taxonomy like tag
+         
+          register_taxonomy('positions',array('team_members'),array(
+            'hierarchical' => true,
+            'labels' => $labels,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'update_count_callback' => '_update_post_term_count',
+            'query_var' => true,
+            'rewrite' => array( 'slug' => 'team_positions' ),
+          ));
+        }
 }
 
 if(class_exists('TeamMembersCPT')) {
