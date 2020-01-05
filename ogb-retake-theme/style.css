@@ -98,16 +98,33 @@ h1.page-title hr {
     text-align: center;
 }
 
-.team-member-info .custom-field {
+ .custom-field {
     margin: 10px 0;
     font-size: 18px;
 }
 
-.team-member-info .custom-field .label {
+ .custom-field .label {
     text-transform: uppercase;
     margin-right: 5px;
 }
 
-.team-member-info .custom-field .value {
+ .custom-field .value {
     font-weight: 600;
+}
+
+#articles .card-body {
+    display: flex;
+    align-items: center;
+}
+
+#articles .archive-row {
+    margin: 65px 0;
+}
+
+#articles .categories {
+    margin: 15px 0;
+}
+
+.article-meta-data {
+    margin: 20px 0;
 }

@@ -33,6 +33,11 @@ function load_stylesheets()
         wp_register_style('jobs_single', get_template_directory_uri() . '/css/single-job.css', array(), false, 'all');
         wp_enqueue_style('jobs_single');
     }
+
+    if(is_page('articles')) {
+        wp_register_style('articles', get_template_directory_uri().'/css/articles.css', array(), null, 'all');
+        wp_enqueue_style('articles');
+    }
 }
 
 add_action('wp_enqueue_scripts', 'load_stylesheets');
@@ -76,6 +81,6 @@ add_image_size('largest', 800, 800, true);
 
 
 function custom_excerpt_length( $length ) {
-    return (is_front_page()) ? 15 : 25;
+    return (is_front_page()) ? 15 : 60;
 }
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
